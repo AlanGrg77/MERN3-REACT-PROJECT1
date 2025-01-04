@@ -25,7 +25,7 @@ const EditPage = () => {
     e.preventDefault();
     const response = await axios.patch(`http://localhost:3000/blog/${id}`, data, {
         headers : {
-            "Content-Type": 'multiple/form-data'
+            "Content-Type": 'multipart/form-data'
         }
     })
     if(response.status == 200){
