@@ -16,7 +16,7 @@ const SingleBlogPage = () => {
     fecthSingleBlog();
   }, []);
   const deleteSingleBlog =async () =>{
-    const response = await axios.delete(`https://mern3-node-project1.onrender.com//blog/${id}`)
+    const response = await axios.delete(`https://mern3-node-project1.onrender.com/blog/${id}`)
     if(response.status == 200){
         alert('Blog deleted successfully')
         navigate('/')
