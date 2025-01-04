@@ -23,7 +23,7 @@ const EditPage = () => {
 
   const editBlog = async (e) =>{
     e.preventDefault();
-    const response = await axios.patch(`http://localhost:3000/blog/${id}`, data, {
+    const response = await axios.patch(`https://mern3-node-project1.onrender.com/blog/${id}`, data, {
         headers : {
             "Content-Type": 'multipart/form-data'
         }
@@ -36,7 +36,7 @@ const EditPage = () => {
     }
   }
   const fecthOldData = async () => {
-    const response = await axios.get(`http://localhost:3000/blog/${id}`);
+    const response = await axios.get(`https://mern3-node-project1.onrender.com/blog/${id}`);
     setData({
         title : response.data.data.title,
         subtitle : response.data.data.subtitle,
