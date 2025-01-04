@@ -1,10 +1,11 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
-const CreatePage = () => {
-  const navigate =  useNavigate();
+const EditPage = () => {
+    const {id} = useParams();
+    const navigate =  useNavigate();
   const [data, setData] = useState({
     title: "",
     subtitle: "",
@@ -20,45 +21,60 @@ const CreatePage = () => {
     });
   };
 
-  const createBlog = async (e) =>{
+  const editBlog = async (e) =>{
     e.preventDefault();
-    const response = await axios.post('http://localhost:3000/blog',data,{
+    const response = await axios.patch(`http://localhost:3000/blog/${id}`, data, {
         headers : {
-            "Content-Type" : "multipart/form-data"
+            "Content-Type": 'multiple/form-data'
         }
     })
     if(response.status == 200){
-        navigate('/')
-        alert('Blog successfylly created');
-    }
-    else{
+        alert('Blog updated succesfully')
+        navigate(`/blog/${id}`)
+    }else{
         alert('Something went wrong')
     }
   }
+  const fecthOldData = async () => {
+    const response = await axios.get(`http://localhost:3000/blog/${id}`);
+    setData({
+        title : response.data.data.title,
+        subtitle : response.data.data.subtitle,
+        description : response.data.data.description
+    });
+    console.log(response);
+  };
+  useEffect(() => {
+    fecthOldData();
+  }, []);
+
+
+
   return (
     <>
     <Navbar />
-      <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">
+       <div className="mx-14 mt-10 border-2 border-blue-400 rounded-lg">
         <div className="mt-10 text-center font-bold">
-          Want to create a blog?
+          Want to edit a blog?
         </div>
-        <div className="mt-3 text-center text-4xl font-bold">Make a blog</div>
-        <form onSubmit={createBlog}>
+        <div className="mt-3 text-center text-4xl font-bold">Make an Edit</div>
+        <form onSubmit={editBlog}>
           <div className="p-8">
             <div className="flex gap-4">
               <input
                 type="text"
                 name="title"
                 className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                placeholder="Title *"
                 onChange={handleChange}
+                value={data.title}
               />
               <input
                 type="text"
                 name="subtitle"
                 className="mt-1 block w-1/2 rounded-md border border-slate-300 bg-white px-3 py-4 placeholder-slate-400 shadow-sm placeholder:font-semibold placeholder:text-gray-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 sm:text-sm"
-                placeholder="SubTitle *"
+            
                 onChange={handleChange}
+                value={data.subtitle}
               />
               <input
                 type="file"
@@ -76,20 +92,20 @@ const CreatePage = () => {
                 cols={30}
                 rows={10}
                 className="mb-10 h-40 w-full resize-none rounded-md border border-slate-300 p-5 font-semibold text-gray-300"
-                defaultValue={"              Description\n            "}
                 onChange={handleChange}
+                value={data.description}
               />
             </div>
             <div className="text-center">
               <button className="cursor-pointer rounded-lg bg-blue-700 px-8 py-5 text-sm font-semibold text-white">
-                Create
+                Edit
               </button>
             </div>
           </div>
         </form>
-      </div>
+      </div> 
     </>
-  );
-};
+  )
+}
 
-export default CreatePage;
+export default EditPage
