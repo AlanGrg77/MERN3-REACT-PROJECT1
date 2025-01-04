@@ -30,12 +30,9 @@ const SingleBlogPage = () => {
           <div className="relative">
             <img
               className="w-full"
-              src={`http://localhost:3000/${blog.image}`}
+              src={blog.image}
               alt="Product Image"
             />
-            <div className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 m-2 rounded-md text-sm font-medium">
-              SALE
-            </div>
           </div>
           <div className="p-4">
             <h3 className="text-lg font-medium mb-2">{blog.title}</h3>
