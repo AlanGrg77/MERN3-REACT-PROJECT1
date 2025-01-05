@@ -13,10 +13,10 @@ const CreatePage = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value} = e.target;
     setData({
       ...data,
-      [name]: name == "image" ? files[0] : value,
+      [name]: name == "image" ? e.target.files[0] : value,
     });
   };
 
@@ -24,8 +24,8 @@ const CreatePage = () => {
     e.preventDefault();
     const response = await axios.post('https://mern3-node-project1.onrender.com/blog',data,{
         headers : {
-            "Content-Type" : "multipart/form-data"
-        }
+            "Content-Type" : "multipart/form-data",
+        },
     })
     if(response.status == 200){
         navigate('/')

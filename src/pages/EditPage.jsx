@@ -14,10 +14,10 @@ const EditPage = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     setData({
       ...data,
-      [name]: name == "image" ? files[0] : value,
+      [name]: name == "image" ? e.target.files[0] : value,
     });
   };
 
@@ -25,8 +25,8 @@ const EditPage = () => {
     e.preventDefault();
     const response = await axios.patch(`https://mern3-node-project1.onrender.com/blog/${id}`, data, {
         headers : {
-            "Content-Type": 'multipart/form-data'
-        }
+            "Content-Type": 'multipart/form-data',
+        },
     })
     if(response.status == 200){
         alert('Blog updated succesfully')
